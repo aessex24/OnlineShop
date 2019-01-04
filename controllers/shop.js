@@ -10,6 +10,17 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
+exports.getProduct = (req, res, next) => {
+    const prodId = req.params.productId;
+    Product.findById( prodId, product => {        
+        res.render('shop/product-detail', {
+            docTitle: product.title,
+            product: product,
+            path: '/products'
+        });
+    });
+}
+
 exports.getCart = (req, res, next) => {
     res.render('shop/cart', {
         docTitle: 'Your Cart',
@@ -41,5 +52,6 @@ exports.getCheckout = (req, res, next) => {
         path: '/checkout'
     })
 }
+
 
 
