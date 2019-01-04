@@ -5,15 +5,20 @@ const path = require('path');
 const express = require('express');
 
 // Custom Modules
-const productCtrl = require('../controllers/products');
+const shopCtrl = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/', productCtrl.getProducts);
+router.get('/', shopCtrl.getIndex);
 
-router.get('/products', productCtrl.get)
+router.get('/products', shopCtrl.getProducts);
 
-router.get('/cart');
+//router.get('/product');
 
-router.get('/checkout');
+router.get('/cart', shopCtrl.getCart);
+
+router.get('/checkout', shopCtrl.getCheckout);
+
+router.get('/orders', shopCtrl.getOrders);
+
 module.exports = router;

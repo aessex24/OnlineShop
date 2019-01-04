@@ -22,10 +22,11 @@ const getProductsFromFile = (cb) => {
 
 
 module.exports = class Product {
-    constructor(t, p, desc) {
-        this.title = t,
-        this.price = p,
-        this.description = desc
+    constructor(title, price, imageUrl, description) {
+        this.title = title,
+        this.imageUrl = imageUrl,
+        this.price = price,
+        this.description = description
     }
 
     save() {
@@ -41,6 +42,10 @@ module.exports = class Product {
     // static so I can call this method directly on the class itself and not on an instantiated object
     static fetchAll(cb) {
         getProductsFromFile(cb);
+    }
+
+    remove() {
+
     }
 
 

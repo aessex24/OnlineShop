@@ -5,14 +5,18 @@ const path  = require('path');
 const express = require('express');
 
 // Custom imports
-const productsCtrl = require('../controllers/products');
+const adminCtrl = require('../controllers/admin');
 
 const router = express.Router();
 
+router.get('/products', adminCtrl.getProducts);
+
 // implicitly this route is reached under /admin/add-product => GET
-router.get('/add-product', productsCtrl.getAddProduct);
+router.get('/add-product', adminCtrl.getAddProduct);
 
 // implicitly this route is reached under /admin/add-product => POST
-router.post('/add-product', productsCtrl.postAddProduct);
+router.post('/add-product', adminCtrl.postAddProduct);
+
+router.get('edit-product', adminCtrl.getEditProduct);
 
 module.exports = router;
