@@ -1,56 +1,34 @@
-// Core Node Modules
-const fs = require('fs');
-const path = require('path');
+const Sequelize = require('sequelize');
 
-// 3rd party dependencies
+sequelize = require('../util/database');
 
-// custom imports
-const pathUtil = require('../util/path');
-const p = path.join(pathUtil, 'data', 'products.json');
+const Product = sequelize.define('product', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
 
-const getProductsFromFile = (cb) => {
-    fs.readFile(p, (err, data) => {
-        if (err) {
-            console.log(err);
-            cb([]);
-        } else {
+    title: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
 
-            cb(JSON.parse(data));
-        }
-    });
-};
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+    },
 
+    imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
 
-module.exports = class Product {
-    constructor(title, price, imageUrl, description) {
-        this.title = title,
-        this.imageUrl = imageUrl,
-        this.price = price,
-        this.description = description
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
+});
 
-    save() {
-        this.id = Math.random().toString();
-        getProductsFromFile( (products) => {
-            products.push(this);
-            console.log('products array when calling save', products);
-            fs.writeFile(p, JSON.stringify(products), (err) => {
-                console.log(err);
-            });
-        });
-    }
-
-    // static so I can call this method directly on the class itself and not on an instantiated object
-    static fetchAll(cb) {
-        getProductsFromFile(cb);
-    }
-
-    static findById(id, cb) {
-        getProductsFromFile(products => {
-            const product = products.find(p => p.id === id);
-            cb(product);
-        });
-    }
-
-
-};
+module.exports = Product;
