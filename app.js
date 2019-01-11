@@ -15,6 +15,9 @@ const Product = require('./models/Product');
 const User = require('./models/User');
 const Cart = require('./models/Cart');
 const CartItem = require('./models/CartItem');
+const Order = require('./models/Order');
+const OrderItem = require('./models/OrderItem');
+
 
 const app = express();
 
@@ -55,15 +58,26 @@ Cart.belongsTo(User); //Will add key to cart which is the user id to chich the c
     A cart belongs to many products and a product belongs to many carts, 
     it's a many-to-many relationship because one cart can hold multiple products
     and a single product can be part of multiple different carts.
+    
+    Need an intermediate table that connects them which basically stores a combination
+    of product IDs and cart IDs
 */
 Cart.belongsToMany(Product, {through: CartItem});
 Product.belongsToMany(Cart, {through: CartItem});
 
-
 /*
-    Need an intermediate table that connects them which basically stores a combination
-    of product IDs and cart IDs
+    one to many
+    A user can have many orders
+    An order can only belong to a single user that places the order
+    
+    Many to many through Order items.
+    An order can belong to many products.
+
+
 */
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, {through: OrderItem});
 
 // npm start runs this
 sequelize

@@ -15,12 +15,17 @@ router.get('/products', shopCtrl.getProducts);
 
 router.get('/products/:productId', shopCtrl.getProduct);
 
-//router.get('/product');
+router.get('/cart/', shopCtrl.getCart);
 
-router.get('/cart', shopCtrl.getCart);
+router.post('/add-to-cart', shopCtrl.postCart);
 
-router.get('/checkout', shopCtrl.getCheckout);
+router.post('/cart-delete-item', shopCtrl.postCartDeleteProduct);
+
+//router.get('/checkout', shopCtrl.getCheckout);
+
+router.post('/create-order', shopCtrl.postOrder);
 
 router.get('/orders', shopCtrl.getOrders);
+
 
 module.exports = router;
